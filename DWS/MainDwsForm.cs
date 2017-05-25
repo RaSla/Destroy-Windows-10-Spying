@@ -318,15 +318,11 @@ namespace DWS_Lite
         {
             try
             {
-                if (!File.Exists(logfilename))
-                {
-                    File.Create(logfilename).Close();
-                }
-                else
+                if (File.Exists(logfilename))
                 {
                     File.Delete(logfilename);
-                    File.Create(logfilename).Close();
                 }
+                File.Create(logfilename).Close();
             }
                 // ReSharper disable once EmptyGeneralCatchClause
                 // ReSharper disable once UnusedVariable
@@ -1073,6 +1069,8 @@ namespace DWS_Lite
             RunCmd("/c net start wuauserv");
             RunCmd("/c netsh advfirewall firewall delete rule name=\"WindowsUpdateBlock\"");
             _OutPut("Windows Update enabled");
+            MessageBox.Show(GetTranslateText("Complete"), GetTranslateText("Info"),
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnDisableWindowsUpdate_Click(object sender, EventArgs e)
@@ -1084,6 +1082,8 @@ namespace DWS_Lite
                 "/c netsh advfirewall firewall add rule name=\"WindowsUpdateBlock\" dir=out interface=any action=block service=wuauserv");
 
             _OutPut("Windows Update disabled");
+            MessageBox.Show(GetTranslateText("Complete"), GetTranslateText("Info"),
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnOpenAndEditHosts_Click(object sender, EventArgs e)
